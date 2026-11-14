@@ -1,0 +1,1758 @@
+[
+  {
+    "graph_id": "template_naml-demo",
+    "name": "NAML Quick Demo",
+    "task": "matching",
+    "description": "Build and train NAML on a fixed sample of real MIND-small users.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mind-demo",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 260.0
+        },
+        "label": null
+      },
+      {
+        "id": "item_1",
+        "component": "item.cnn",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 60.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.ada",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 340.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.dot",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 190.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.matching_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_content",
+        "source": "dataset_1",
+        "sourceHandle": "content",
+        "target": "item_1",
+        "targetHandle": "content"
+      },
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "item_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_candidate",
+        "source": "item_1",
+        "sourceHandle": "candidate",
+        "target": "predictor_1",
+        "targetHandle": "candidate"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 32,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 32,
+      "item_hidden_size": 32,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "GAUC",
+        "MRR",
+        "NDCG@5",
+        "NDCG@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "naml-demo",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_naml",
+    "name": "NAML",
+    "task": "matching",
+    "description": "CNN Item Encoder + Additive Attention User Encoder + Dot Predictor.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mind",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 260.0
+        },
+        "label": null
+      },
+      {
+        "id": "item_1",
+        "component": "item.cnn",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 60.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.ada",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 340.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.dot",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 190.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.matching_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_content",
+        "source": "dataset_1",
+        "sourceHandle": "content",
+        "target": "item_1",
+        "targetHandle": "content"
+      },
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "item_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_candidate",
+        "source": "item_1",
+        "sourceHandle": "candidate",
+        "target": "predictor_1",
+        "targetHandle": "candidate"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "GAUC",
+        "MRR",
+        "NDCG@5",
+        "NDCG@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "naml",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_nrms",
+    "name": "NRMS",
+    "task": "matching",
+    "description": "Multi-head self-attention on both news and user history + Dot Predictor.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mind",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 260.0
+        },
+        "label": null
+      },
+      {
+        "id": "item_1",
+        "component": "item.attention",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 60.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.attention",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 340.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.dot",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 190.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.matching_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_content",
+        "source": "dataset_1",
+        "sourceHandle": "content",
+        "target": "item_1",
+        "targetHandle": "content"
+      },
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "item_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_candidate",
+        "source": "item_1",
+        "sourceHandle": "candidate",
+        "target": "predictor_1",
+        "targetHandle": "candidate"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "GAUC",
+        "MRR",
+        "NDCG@5",
+        "NDCG@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "nrms",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_lstur",
+    "name": "LSTUR",
+    "task": "matching",
+    "description": "CNNCat Item Encoder + GRU User Encoder + Dot Predictor.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mind",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 260.0
+        },
+        "label": null
+      },
+      {
+        "id": "item_1",
+        "component": "item.cnncat",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 60.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.gru",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 340.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.dot",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 190.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.matching_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_content",
+        "source": "dataset_1",
+        "sourceHandle": "content",
+        "target": "item_1",
+        "targetHandle": "content"
+      },
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "item_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_candidate",
+        "source": "item_1",
+        "sourceHandle": "candidate",
+        "target": "predictor_1",
+        "targetHandle": "candidate"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "GAUC",
+        "MRR",
+        "NDCG@5",
+        "NDCG@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "lstur",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_deepfm",
+    "name": "DeepFM",
+    "task": "ranking",
+    "description": "ID-based ranking: Pooling user operator + DeepFM predictor (no content encoder).",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mindrb",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.pooling",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 150.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.deepfm",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.ranking_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "dataset_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_features",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "predictor_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "AUC",
+        "LogLoss",
+        "GAUC",
+        "Recall@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "deepfm",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_dcn",
+    "name": "DCN",
+    "task": "ranking",
+    "description": "ID-based ranking: Pooling + Deep & Cross Network.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mindrb",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.pooling",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 150.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.dcn",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.ranking_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "dataset_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_features",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "predictor_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "AUC",
+        "LogLoss",
+        "GAUC",
+        "Recall@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "dcn",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_din",
+    "name": "DIN",
+    "task": "ranking",
+    "description": "ID-based ranking: NullConcat user operator + Deep Interest Network.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mindrb",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.nullconcat",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 150.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.din",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.ranking_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "dataset_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_features",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "predictor_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "AUC",
+        "LogLoss",
+        "GAUC",
+        "Recall@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "din",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_pnn",
+    "name": "PNN",
+    "task": "ranking",
+    "description": "ID-based ranking: Pooling + Product-based Neural Network.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mindrb",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.pooling",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 150.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.pnn",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.ranking_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "dataset_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_features",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "predictor_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "AUC",
+        "LogLoss",
+        "GAUC",
+        "Recall@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "pnn",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_autoint",
+    "name": "AutoInt",
+    "task": "ranking",
+    "description": "ID-based ranking: Pooling + AutoInt interacting layer.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mindrb",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.pooling",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 150.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.autoint",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.ranking_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "dataset_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_features",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "predictor_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "AUC",
+        "LogLoss",
+        "GAUC",
+        "Recall@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "autoint",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_dcnv2",
+    "name": "DCNv2",
+    "task": "ranking",
+    "description": "ID-based ranking: Pooling + improved Deep & Cross Network.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mindrb",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.pooling",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 150.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.dcnv2",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.ranking_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "dataset_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_features",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "predictor_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "AUC",
+        "LogLoss",
+        "GAUC",
+        "Recall@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "dcnv2",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_masknet",
+    "name": "MaskNet",
+    "task": "ranking",
+    "description": "ID-based ranking: Pooling + MaskNet.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mindrb",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.pooling",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 150.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.masknet",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.ranking_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "dataset_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_features",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "predictor_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "AUC",
+        "LogLoss",
+        "GAUC",
+        "Recall@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "masknet",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_gdcn",
+    "name": "GDCN",
+    "task": "ranking",
+    "description": "ID-based ranking: Pooling + Gated Deep & Cross Network.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mindrb",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.pooling",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 150.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.gdcn",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.ranking_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "dataset_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_features",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "predictor_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "AUC",
+        "LogLoss",
+        "GAUC",
+        "Recall@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "gdcn",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_finalmlp",
+    "name": "FinalMLP",
+    "task": "ranking",
+    "description": "ID-based ranking: Pooling + two-stream FinalMLP.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mindrb",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.pooling",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 150.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.finalmlp",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 240.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.ranking_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "dataset_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_features",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "predictor_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "AUC",
+        "LogLoss",
+        "GAUC",
+        "Recall@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "finalmlp",
+    "schema_version": "1.0"
+  },
+  {
+    "graph_id": "template_miner",
+    "name": "MINER",
+    "task": "matching",
+    "description": "Transformer Item Encoder + PolyAttention User Encoder + MINER predictor.",
+    "nodes": [
+      {
+        "id": "dataset_1",
+        "component": "dataset.mind",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 40.0,
+          "y": 260.0
+        },
+        "label": null
+      },
+      {
+        "id": "item_1",
+        "component": "item.transformer",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 60.0
+        },
+        "label": null
+      },
+      {
+        "id": "user_1",
+        "component": "user.polyattention",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 340.0,
+          "y": 340.0
+        },
+        "label": null
+      },
+      {
+        "id": "predictor_1",
+        "component": "predictor.miner",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 680.0,
+          "y": 190.0
+        },
+        "label": null
+      },
+      {
+        "id": "training_1",
+        "component": "training.matching_task",
+        "type": null,
+        "params": {},
+        "position": {
+          "x": 1000.0,
+          "y": 430.0
+        },
+        "label": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_content",
+        "source": "dataset_1",
+        "sourceHandle": "content",
+        "target": "item_1",
+        "targetHandle": "content"
+      },
+      {
+        "id": "e_user",
+        "source": "user_1",
+        "sourceHandle": "user",
+        "target": "predictor_1",
+        "targetHandle": "user"
+      },
+      {
+        "id": "e_history",
+        "source": "item_1",
+        "sourceHandle": "history",
+        "target": "user_1",
+        "targetHandle": "history"
+      },
+      {
+        "id": "e_candidate",
+        "source": "item_1",
+        "sourceHandle": "candidate",
+        "target": "predictor_1",
+        "targetHandle": "candidate"
+      },
+      {
+        "id": "e_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "features",
+        "target": "user_1",
+        "targetHandle": "features"
+      },
+      {
+        "id": "e_train_score",
+        "source": "predictor_1",
+        "sourceHandle": "score",
+        "target": "training_1",
+        "targetHandle": "score"
+      },
+      {
+        "id": "e_train_dataset",
+        "source": "dataset_1",
+        "sourceHandle": "dataset",
+        "target": "training_1",
+        "targetHandle": "dataset"
+      }
+    ],
+    "train": {
+      "batch_size": 64,
+      "accumulate_batch": 1,
+      "lr": 0.001,
+      "hidden_size": 256,
+      "item_hidden_size": 256,
+      "epochs": 1,
+      "device": "cpu",
+      "cuda_index": null,
+      "metrics": [
+        "GAUC",
+        "MRR",
+        "NDCG@5",
+        "NDCG@10"
+      ],
+      "dev_metric": "GAUC",
+      "patience": 5,
+      "seed": 2023,
+      "simple_dev": false,
+      "extra_cli": {}
+    },
+    "template_id": "miner",
+    "schema_version": "1.0"
+  }
+]
