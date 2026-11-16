@@ -1,0 +1,9 @@
+{
+  "description": "Read-only snapshot of component catalog, templates, and public Benchmark evaluations. No runs, credentials, datasets, checkpoints or backend source included.",
+  "benchmark_source": "https://lego.qijiong.work/evaluations/",
+  "benchmark_fetched_at": 1794843914.4461422,
+  "components": 74,
+  "templates": 14,
+  "benchmark_configurations": 828,
+  "dataset_columns": "Illustrative browser-only columns; not a snapshot of real dataset files."
+}
